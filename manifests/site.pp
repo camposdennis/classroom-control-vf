@@ -39,21 +39,36 @@ ini_setting { 'random ordering':
 # specified in the console for that node.
 
 node default {
-  # This is where you can declare classes for all nodes.
-  # Example:
-  #   class { 'my_class': }
-  notify { "Hello, my name is ${::hostname}": }
-  
-  file { '/etc/motd':
-    ensure => file,
-    owner => 'root',
-    group => 'root',
-    mode => '0755',
-    content => "Learning Puppet",
-  }
-  
+  ## Lab 13.2
   if $::virtual != 'physical' {
-    $vmname = capitalize($::virtual)
-    notify { "This is a ${vmname} virtual machine.": }
+    $vm = capitalize($::virtual)
+    notify { "Looks like I'm on: ${vm}": }
   }
+
+  ## Declare the nginx class (Lab 15.7)
+  include users::admins
+
+  ## Declare the nginx class (Lab 11.2)
+  include nginx
+  
+  ## Declare the skeleton class (Lab 11.1)
+  include memcached
+  
+  ## Declare the skeleton class (Lab 9.3)
+  include skeleton
+  
+  ## HOMEWORK - Hot entry (Lab 7.3)
+  host { 'testing.puppetlabs.vm':
+    ensure => present,
+    ip     => '127.0.0.1',
+  }
+  
+  ## Lab 7.2 - Execs
+  exec { 'cowsay "Welcome to my machine" > /etc/motd':
+    path    => '/usr/local/bin',
+    creates => '/etc/motd',
+  }
+  
+  ## Notify that came with the repo
+  notify { "Hello, my name is ${::hostname}": }
 }
