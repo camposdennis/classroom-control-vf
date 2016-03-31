@@ -7,7 +7,4 @@ class users::admins {
     groupname => 'staff',
     homedir => '/var/tmp/luke',
   }
-  group { 'staff':
-    ensure => present,
-  }
 }
