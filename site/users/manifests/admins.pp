@@ -1,10 +1,11 @@
 class users::admins {
   users::managed_user { 'jose': }
   users::managed_user { 'alice':
-    group => 'staff',
+    groupname => 'staff',
   }
   users::managed_user { 'chen':
-    group => 'staff',
+    groupname => 'staff',
+    homedir => '/var/tmp/luke',
   }
   group { 'staff':
     ensure => present,
