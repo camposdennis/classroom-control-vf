@@ -5,6 +5,5 @@ class users::admins {
   }
   users::managed_user { 'chen':
     groupname => 'staff',
-    homedir => '/var/tmp/luke',
   }
 }
